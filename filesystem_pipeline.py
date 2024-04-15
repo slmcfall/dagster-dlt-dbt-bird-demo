@@ -54,16 +54,16 @@ def stream_and_merge_csv() -> None:
 def read_csv_with_duckdb() -> None:
     pipeline = dlt.pipeline(
         pipeline_name="standard_filesystem",
-        destination='duckdb',
+        destination='filesystem',
         dataset_name="translation_table",
     )
 
     # load all the CSV data, excluding headers
     met_files = readers(
-        bucket_url="Users/seanmcfall/bird-demo-local/input_data/translation_table/", file_glob="*.csv"
+        bucket_url="Users/seanmcfall/workspace/dagster-dlt-dbt-bird-demo/input_data/translation_table/", file_glob="*.csv"
     ).read_csv_duckdb(chunk_size=1000, header=True)
 
-    load_info = pipeline.run(met_files)
+    load_info = pipeline.run(met_files, loader_file_format="parquet")
 
     print(load_info)
     print(pipeline.last_trace.last_normalize_info)

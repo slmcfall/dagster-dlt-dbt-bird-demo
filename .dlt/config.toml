@@ -9,3 +9,7 @@ dlthub_telemetry = true
 # bucket_url = "bucket_url" # please set me up!
 bucket_url="file://"
 file_glob="*"
+
+[destination.filesystem]
+bucket_url = "file:///Users/seanmcfall/workspace/dagster-dlt-dbt-bird-demo/output_data"
+layout="{table_name}/{load_id}.{file_id}.{ext}" # current preconfigured naming scheme
